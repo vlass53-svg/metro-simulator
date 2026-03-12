@@ -18,6 +18,8 @@ var ars_limit: float = 80.0     # текущее ограничение
 enum TrafficSignal { GREEN, YELLOW_GREEN, YELLOW, RED, WHITE }
 var current_signal: TrafficSignal = TrafficSignal.GREEN
 
+@onready var hud = get_node_or_null("HUD")
+
 func _process(delta: float) -> void:
 	_update_speed(delta)
 	_check_ars()
@@ -45,8 +47,6 @@ func _move(delta: float) -> void:
 	# переводим км/ч в пиксели/сек (масштаб: 1 м = 5 пикселей)
 	var pixel_speed = (speed / 3.6) * 5.0
 	position.x += pixel_speed * delta
-
-@onready var hud = get_node_or_null("HUD")
 
 func _update_hud() -> void:
 	if hud:
