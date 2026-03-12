@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://71msnx8wmw1n"]
+
+[ext_resource type="Script" uid="uid://d2dxukmier44e" path="res://station.gd" id="1_lu35c"]
+
+[node name="Station" type="Node2D" unique_id=978039523]
+script = ExtResource("1_lu35c")
+
+[node name="Platform" type="ColorRect" parent="." unique_id=1282346038]
+offset_left = -150.0
+offset_top = -20.0
+offset_right = 150.0
+color = Color(1, 0, 0, 1)
+
+[node name="Station_name" type="Label" parent="." unique_id=825457421]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -27.0
+text = "Станция"
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1041310803]
