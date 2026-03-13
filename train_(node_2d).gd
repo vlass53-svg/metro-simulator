@@ -110,8 +110,8 @@ func _unhandled_input(event: InputEvent) -> void:
 						var h = get_node_or_null("HUD")
 						if h:
 							h.show_stop_result(result)
-		doors_open = true
-		stop_result_timer = 5.0
+			doors_open = true
+			stop_result_timer = 5.0
 
 
 		
