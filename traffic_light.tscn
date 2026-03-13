@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dc2l7121mg3r5"]
+
+[ext_resource type="Script" uid="uid://b64262x3ucky6" path="res://traffic_light.gd" id="1_4ucqr"]
+
+[node name="TrafficLight" type="Node2D" unique_id=1428979632]
+script = ExtResource("1_4ucqr")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=573000100]
+offset_left = -10.0
+offset_top = -60.0
+offset_right = 10.0
