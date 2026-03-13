@@ -13,10 +13,12 @@ func refresh(spd, ars, thr, brk, sig, doors: bool) -> void:
 	brake_label.text = "Тормоз: %d" % brk
 	match sig:
 		0: signal_rect.color = Color.GREEN
-		1: signal_rect.color = Color(1, 1, 0)
+		1: signal_rect.color = Color(1, 0.8, 0)
 		2: signal_rect.color = Color.YELLOW
-		3: signal_rect.color = Color.RED
-		4: signal_rect.color = Color.WHITE
+		3: signal_rect.color = Color.ORANGE
+		4: signal_rect.color = Color.RED
+		5: signal_rect.color = Color.WHITE
+
 	if doors:
 		$DoorsLabel.text = "🚪 Двери открыты"
 	else:

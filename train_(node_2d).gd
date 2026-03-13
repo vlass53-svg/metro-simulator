@@ -15,7 +15,7 @@ var brake_notch: int = 0        # 0-7 (позиции тормоза)
 var ars_limit: float = 80.0     # текущее ограничение
 
 # === Сигнал ===
-enum TrafficSignal { GREEN, YELLOW_GREEN, YELLOW, RED, WHITE }
+enum TrafficSignal { GREEN, YELLOW_GREEN, YELLOW, RED_YELLOW, RED, WHITE }
 var current_signal: TrafficSignal = TrafficSignal.GREEN
 
 # === Станция ===
@@ -26,14 +26,15 @@ var door_wait_time: float = 5.0  # секунд стоянки
 var stop_result_timer: float = 0.0
 
 
-
-
 func _process(delta: float) -> void:
 	_update_speed(delta)
 	_check_ars()
 	_move(delta)
 	_check_station()
+	_check_signals()
 	_update_hud()
+	
+	
 	# таймер оценки
 	if stop_result_timer > 0:
 		stop_result_timer -= delta
@@ -125,3 +126,26 @@ func _check_station() -> void:
 		var dist = abs(position.x - station.global_position.x)
 		if dist < 150 and speed < 2.0:
 			at_station = true
+
+func _check_signals() -> void:
+	var track = get_node_or_null("../Track")
+	if not track:
+		return
+	
+	var nearest_dist = INF
+	var nearest_signal = null
+	
+	for child in track.get_children():
+		if child.has_method("get_ars_limit"):
+			if child.global_position.x > position.x:
+				var dist = child.global_position.x - position.x
+				if dist < nearest_dist:
+					nearest_dist = dist
+					nearest_signal = child
+	
+	if nearest_signal and nearest_dist < 600:
+		ars_limit = nearest_signal.get_ars_limit()
+		current_signal = nearest_signal.state
+	else:
+		ars_limit = 80.0
+		current_signal = TrafficSignal.GREEN
