@@ -96,8 +96,14 @@ func _unhandled_input(event: InputEvent) -> void:
 					var dist = abs(position.x - station.global_position.x)
 					if dist < 150:
 						var result = station.evaluate_stop(position.x)
-						print("Оценка: ", result)
-			doors_open = true
+						var h = get_node_or_null("HUD")
+						if h:
+							h.show_stop_result(result)
+			if doors_open:
+				doors_open = false
+				var h = get_node_or_null("HUD")
+				if h:
+					h.hide_stop_result()
 
 		
 func _check_station() -> void:

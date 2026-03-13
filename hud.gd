@@ -21,3 +21,8 @@ func refresh(spd, ars, thr, brk, sig, doors: bool) -> void:
 		$DoorsLabel.text = "🚪 Двери открыты"
 	else:
 		$DoorsLabel.text = ""
+func show_stop_result(result: String) -> void:
+	$StopLabel.text = result
+
+func hide_stop_result() -> void:
+	$StopLabel.text = ""
