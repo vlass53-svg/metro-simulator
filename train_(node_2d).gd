@@ -65,7 +65,7 @@ func _update_hud() -> void:
 		print("HUD не найден!")
 		
 # === Ввод игрока ===
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("throttle_up"):
 		if brake_notch > 0:
 			brake_notch -= 1
@@ -90,8 +90,11 @@ func _input(event: InputEvent) -> void:
 		brake_notch = 7
 		print("ЭКСТРЕННОЕ ТОРМОЖЕНИЕ!")
 		
-	if event.is_action_pressed("open_doors"):
-		if at_station and speed < 2.0:
+	if event.is_action_pressed("open_doors", false):
+		if doors_open:
+			doors_open = false
+			print("Двери закрыты")
+		elif at_station and speed < 2.0:
 			var track = get_node_or_null("../Track")
 			if track:
 				for station in track.get_children():
@@ -99,14 +102,17 @@ func _input(event: InputEvent) -> void:
 					if dist < 150:
 						var result = station.evaluate_stop(position.x)
 						print("Оценка остановки: ", result)
-		doors_open = !doors_open
-		if doors_open:
-			print("Двери открыты")
-		else:
-			print("Двери закрыты")
-	else:
-		print("Нельзя открыть двери!")
+		doors_open = true
+		print("Двери открыты")
 
+	if event.is_action_pressed("open_doors"):
+		print("D нажата, doors_open=", doors_open, " at_station=", at_station)
+		if doors_open:
+			doors_open = false
+			print("Двери закрыты")
+		elif at_station and speed < 2.0:
+			doors_open = true
+			print("Двери открыты")
 		
 func _check_station() -> void:
 	var track = get_node_or_null("../Track")
