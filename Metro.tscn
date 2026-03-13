@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ci5suyqkbqrgb"]
 
 [ext_resource type="Script" uid="uid://c8cwr6bys2lvw" path="res://Track.gd" id="1_233ia"]
+[ext_resource type="Script" uid="uid://b762cfltita2" path="res://metro.gd" id="1_mxynh"]
 [ext_resource type="Script" uid="uid://do3ongneh2ecc" path="res://hud.gd" id="1_qv5uj"]
 [ext_resource type="PackedScene" uid="uid://71msnx8wmw1n" path="res://station.tscn" id="4_8scla"]
 
@@ -19,7 +20,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="Train (Node 2d)" type="Node2D" unique_id=683064282]
-script = ExtResource("1_233ia")
+script = ExtResource("1_mxynh")
 
 [node name="Body (Sprite2D)" type="Sprite2D" parent="." unique_id=295094776]
 
@@ -27,9 +28,9 @@ script = ExtResource("1_233ia")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=267039594]
 custom_minimum_size = Vector2(200, 60)
-offset_top = -30.0
+offset_top = 315.0
 offset_right = 200.0
-offset_bottom = 30.0
+offset_bottom = 375.0
 script = SubResource("GDScript_j6rvj")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1220688293]
