@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 [node name="World" type="Node2D" unique_id=623426668]
 
 [node name="Train (Node 2d)" type="Node2D" parent="." unique_id=683064282]
-position = Vector2(0, 300)
+position = Vector2(-500, 300)
 script = ExtResource("1_mxynh")
 
 [node name="Body (Sprite2D)" type="Sprite2D" parent="Train (Node 2d)" unique_id=295094776]
@@ -30,6 +30,7 @@ script = ExtResource("1_mxynh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Train (Node 2d)" unique_id=1462555759]
 
 [node name="ColorRect" type="ColorRect" parent="Train (Node 2d)" unique_id=267039594]
+z_index = 1
 custom_minimum_size = Vector2(200, 60)
 offset_left = -100.0
 offset_top = -30.0
@@ -78,9 +79,9 @@ offset_bottom = 243.0
 
 [node name="StopLabel" type="Label" parent="Train (Node 2d)/HUD" unique_id=1979909186]
 offset_left = 1000.0
-offset_top = 50.0
+offset_top = 100.0
 offset_right = 1040.0
-offset_bottom = 73.0
+offset_bottom = 123.0
 
 [node name="Camera2D" type="Camera2D" parent="Train (Node 2d)" unique_id=779312940]
 

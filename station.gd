@@ -7,15 +7,11 @@ func _ready():
 	if label:
 		label.text = station_name
 
-func show_marker():
-	$StopMarker.visible = true
-
-func hide_marker():
-	$StopMarker.visible = false
-
 func evaluate_stop(train_x: float) -> String:
-	var dist = abs(train_x - global_position.x)
-	hide_marker()
+	var train_head = train_x + 100
+	var marker_x = global_position.x + 130
+	var dist = abs(train_head - marker_x)
+	
 	if dist < 10:
 		return "Идеально! ⭐"
 	elif dist < 30:

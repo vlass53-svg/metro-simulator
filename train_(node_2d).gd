@@ -123,11 +123,5 @@ func _check_station() -> void:
 	at_station = false
 	for station in track.get_children():
 		var dist = abs(position.x - station.global_position.x)
-		
-		# Показываем маркер при приближении
-		if dist < 400 and speed > 0:
-			station.show_marker()
-		
 		if dist < 150 and speed < 2.0:
 			at_station = true
-		
