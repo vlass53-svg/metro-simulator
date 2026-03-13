@@ -1,30 +1,24 @@
-extends CanvasLayer
+extends Node2D
 
-@onready var speed_label = $SpeedLabel
-@onready var ars_label = $ARSLabel
-@onready var throttle_label = $ThrottleLabel
-@onready var brake_label = $BrakeLabel
-@onready var signal_rect = $SignalRect
+enum State { GREEN, YELLOW_GREEN, YELLOW, RED_YELLOW, RED }
+var state: State = State.GREEN
 
-func refresh(spd, ars, thr, brk, sig, doors: bool) -> void:
-	speed_label.text = "Скорость: %d км/ч" % int(spd)
-	ars_label.text = "АРС: %d км/ч" % int(ars)
-	throttle_label.text = "Тяга: %d" % thr
-	brake_label.text = "Тормоз: %d" % brk
-	match sig:
-		0: signal_rect.color = Color.GREEN
-		1: signal_rect.color = Color(1, 0.8, 0)
-		2: signal_rect.color = Color.YELLOW
-		3: signal_rect.color = Color.ORANGE
-		4: signal_rect.color = Color.RED
-		5: signal_rect.color = Color.WHITE
+@onready var light = $Light
 
-	if doors:
-		$DoorsLabel.text = "🚪 Двери открыты"
-	else:
-		$DoorsLabel.text = ""
-func show_stop_result(result: String) -> void:
-	$StopLabel.text = result
+func set_state(new_state: State) -> void:
+	state = new_state
+	match state:
+		State.GREEN:        light.color = Color.GREEN
+		State.YELLOW_GREEN: light.color = Color(1, 0.8, 0)
+		State.YELLOW:       light.color = Color.YELLOW
+		State.RED_YELLOW:   light.color = Color.ORANGE
+		State.RED:          light.color = Color.RED
 
-func hide_stop_result() -> void:
-	$StopLabel.text = ""
+func get_ars_limit() -> float:
+	match state:
+		State.GREEN:        return 80.0
+		State.YELLOW_GREEN: return 60.0
+		State.YELLOW:       return 40.0
+		State.RED_YELLOW:   return 20.0
+		State.RED:          return 0.0
+	return 80.0

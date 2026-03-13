@@ -5,20 +5,6 @@
 [ext_resource type="Script" uid="uid://do3ongneh2ecc" path="res://hud.gd" id="1_qv5uj"]
 [ext_resource type="PackedScene" uid="uid://71msnx8wmw1n" path="res://station.tscn" id="4_8scla"]
 
-[sub_resource type="GDScript" id="GDScript_j6rvj"]
-script/source = "extends ColorRect
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
-
 [node name="World" type="Node2D" unique_id=623426668]
 
 [node name="Train (Node 2d)" type="Node2D" parent="." unique_id=683064282]
@@ -36,9 +22,8 @@ offset_left = -100.0
 offset_top = -30.0
 offset_right = 100.0
 offset_bottom = 30.0
-script = SubResource("GDScript_j6rvj")
 
-[node name="HUD" type="CanvasLayer" parent="Train (Node 2d)" unique_id=1220688293]
+[node name="HUD" type="CanvasLayer" parent="Train (Node 2d)" unique_id=624396132]
 script = ExtResource("1_qv5uj")
 
 [node name="SpeedLabel" type="Label" parent="Train (Node 2d)/HUD" unique_id=154097828]
