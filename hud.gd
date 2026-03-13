@@ -6,7 +6,7 @@ extends CanvasLayer
 @onready var brake_label = $BrakeLabel
 @onready var signal_rect = $SignalRect
 
-func refresh(spd, ars, thr, brk, sig):
+func refresh(spd, ars, thr, brk, sig, doors: bool) -> void:
 	speed_label.text = "Скорость: %d км/ч" % int(spd)
 	ars_label.text = "АРС: %d км/ч" % int(ars)
 	throttle_label.text = "Тяга: %d" % thr
@@ -17,3 +17,7 @@ func refresh(spd, ars, thr, brk, sig):
 		2: signal_rect.color = Color.YELLOW
 		3: signal_rect.color = Color.RED
 		4: signal_rect.color = Color.WHITE
+	if doors:
+		$DoorsLabel.text = "🚪 Двери открыты"
+	else:
+		$DoorsLabel.text = ""

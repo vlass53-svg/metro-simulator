@@ -1,5 +1,9 @@
 extends Node2D
 
+func _ready() -> void:
+	for station in get_children():
+		station.position.y = -35
+
 func _draw():
 	# Рисуем рельсы — две линии
 	var rail_length = 10000

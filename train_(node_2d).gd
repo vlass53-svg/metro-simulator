@@ -18,13 +18,22 @@ var ars_limit: float = 80.0     # текущее ограничение
 enum TrafficSignal { GREEN, YELLOW_GREEN, YELLOW, RED, WHITE }
 var current_signal: TrafficSignal = TrafficSignal.GREEN
 
+# === Станция ===
+var at_station: bool = false
+var doors_open: bool = false
+var door_timer: float = 0.0
+var door_wait_time: float = 5.0  # секунд стоянки
+
+
 
 
 func _process(delta: float) -> void:
 	_update_speed(delta)
 	_check_ars()
 	_move(delta)
+	_check_station()
 	_update_hud()
+
 
 func _update_speed(delta: float) -> void:
 	if brake_notch > 0:
@@ -51,7 +60,7 @@ func _move(delta: float) -> void:
 func _update_hud() -> void:
 	var h = get_node_or_null("HUD")
 	if h:
-		h.refresh(speed, ars_limit, throttle_notch, brake_notch, current_signal)
+		h.refresh(speed, ars_limit, throttle_notch, brake_notch, current_signal, doors_open)
 	else:
 		print("HUD не найден!")
 		
@@ -80,3 +89,21 @@ func _input(event: InputEvent) -> void:
 		throttle_notch = 0
 		brake_notch = 7
 		print("ЭКСТРЕННОЕ ТОРМОЖЕНИЕ!")
+		
+func _check_station() -> void:
+	var track = get_node_or_null("../Track")
+	if not track:
+		return
+	
+	at_station = false
+	for station in track.get_children():
+		var dist = abs(position.x - station.global_position.x)
+		if dist < 150 and speed < 2.0:
+			at_station = true
+		
+	if at_station and doors_open:
+		door_timer -= get_process_delta_time()
+		if door_timer <= 0:
+			doors_open = false
+			at_station = false
+			print("Двери закрыты. Отправление!")
