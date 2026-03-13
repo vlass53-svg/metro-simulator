@@ -23,6 +23,7 @@ var at_station: bool = false
 var doors_open: bool = false
 var door_timer: float = 0.0
 var door_wait_time: float = 5.0  # секунд стоянки
+var stop_result_timer: float = 0.0
 
 
 
@@ -33,6 +34,13 @@ func _process(delta: float) -> void:
 	_move(delta)
 	_check_station()
 	_update_hud()
+	# таймер оценки
+	if stop_result_timer > 0:
+		stop_result_timer -= delta
+		if stop_result_timer <= 0:
+			var h = get_node_or_null("HUD")
+			if h:
+				h.hide_stop_result()
 
 
 func _update_speed(delta: float) -> void:
@@ -89,6 +97,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_doors"):
 		if doors_open:
 			doors_open = false
+			var h = get_node_or_null("HUD")
+			if h:
+				h.hide_stop_result()
 		elif at_station and speed < 2.0:
 			var track = get_node_or_null("../Track")
 			if track:
@@ -99,11 +110,9 @@ func _unhandled_input(event: InputEvent) -> void:
 						var h = get_node_or_null("HUD")
 						if h:
 							h.show_stop_result(result)
-			if doors_open:
-				doors_open = false
-				var h = get_node_or_null("HUD")
-				if h:
-					h.hide_stop_result()
+		doors_open = true
+		stop_result_timer = 5.0
+
 
 		
 func _check_station() -> void:
