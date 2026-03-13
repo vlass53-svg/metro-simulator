@@ -19,3 +19,9 @@ offset_bottom = -27.0
 text = "Станция"
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1041310803]
+
+[node name="StopMarker" type="ColorRect" parent="." unique_id=2088178336]
+offset_top = -30.0
+offset_right = 4.0
+offset_bottom = 30.0
+color = Color(1, 1, 1, 0.39215687)

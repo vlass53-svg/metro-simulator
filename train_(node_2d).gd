@@ -90,6 +90,24 @@ func _input(event: InputEvent) -> void:
 		brake_notch = 7
 		print("ЭКСТРЕННОЕ ТОРМОЖЕНИЕ!")
 		
+	if event.is_action_pressed("open_doors"):
+		if at_station and speed < 2.0:
+			var track = get_node_or_null("../Track")
+			if track:
+				for station in track.get_children():
+					var dist = abs(position.x - station.global_position.x)
+					if dist < 150:
+						var result = station.evaluate_stop(position.x)
+						print("Оценка остановки: ", result)
+		doors_open = !doors_open
+		if doors_open:
+			print("Двери открыты")
+		else:
+			print("Двери закрыты")
+	else:
+		print("Нельзя открыть двери!")
+
+		
 func _check_station() -> void:
 	var track = get_node_or_null("../Track")
 	if not track:
@@ -98,12 +116,11 @@ func _check_station() -> void:
 	at_station = false
 	for station in track.get_children():
 		var dist = abs(position.x - station.global_position.x)
+		
+		# Показываем маркер при приближении
+		if dist < 400 and speed > 0:
+			station.show_marker()
+		
 		if dist < 150 and speed < 2.0:
 			at_station = true
 		
-	if at_station and doors_open:
-		door_timer -= get_process_delta_time()
-		if door_timer <= 0:
-			doors_open = false
-			at_station = false
-			print("Двери закрыты. Отправление!")
