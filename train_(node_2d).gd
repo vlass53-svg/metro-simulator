@@ -71,29 +71,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			brake_notch -= 1
 		else:
 			throttle_notch = min(4, throttle_notch + 1)
-		print("Тяга: ", throttle_notch, " | Тормоз: ", brake_notch)
 	
 	if event.is_action_pressed("throttle_down"):
 		if throttle_notch > 0:
 			throttle_notch -= 1
 		else:
 			brake_notch = min(7, brake_notch + 1)
-		print("Тяга: ", throttle_notch, " | Тормоз: ", brake_notch)
 	
 	if event.is_action_pressed("neutral"):
 		throttle_notch = 0
 		brake_notch = 0
-		print("Нейтраль")
 	
 	if event.is_action_pressed("emergency_brake"):
 		throttle_notch = 0
 		brake_notch = 7
-		print("ЭКСТРЕННОЕ ТОРМОЖЕНИЕ!")
-		
+	
 	if event.is_action_pressed("open_doors"):
 		if doors_open:
 			doors_open = false
-			print("Двери закрыты")
 		elif at_station and speed < 2.0:
 			var track = get_node_or_null("../Track")
 			if track:
@@ -101,9 +96,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					var dist = abs(position.x - station.global_position.x)
 					if dist < 150:
 						var result = station.evaluate_stop(position.x)
-						print("Оценка остановки: ", result)
-		doors_open = true
-		print("Двери открыты")
+						print("Оценка: ", result)
+			doors_open = true
 
 		
 func _check_station() -> void:
