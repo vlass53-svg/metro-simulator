@@ -90,7 +90,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		brake_notch = 7
 		print("ЭКСТРЕННОЕ ТОРМОЖЕНИЕ!")
 		
-	if event.is_action_pressed("open_doors", false):
+	if event.is_action_pressed("open_doors"):
 		if doors_open:
 			doors_open = false
 			print("Двери закрыты")
@@ -105,14 +105,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		doors_open = true
 		print("Двери открыты")
 
-	if event.is_action_pressed("open_doors"):
-		print("D нажата, doors_open=", doors_open, " at_station=", at_station)
-		if doors_open:
-			doors_open = false
-			print("Двери закрыты")
-		elif at_station and speed < 2.0:
-			doors_open = true
-			print("Двери открыты")
 		
 func _check_station() -> void:
 	var track = get_node_or_null("../Track")
